@@ -1,0 +1,40 @@
+import Hechiceria.*
+
+describe "Tests de lucha" {
+
+	fixture {
+		rolando.agregarVariosArtefactos([ espadaDelDestino, collarDivino, mascaraOscura ])
+		collarDivino.cantidadDePerlas(5)
+	}
+
+	test "1)Sin artefactos la habilidad de lucha de rolando, es de 1 punto" {
+		rolando.artefactos().clear()
+		assert.equals(rolando.habilidadDeLucha(), 1)
+	}
+
+	test "2)La habilidad de lucha de rolando con todos los artefactos, es de 13 puntos" {
+		assert.equals(rolando.habilidadDeLucha(), 13)
+	}
+
+	test "3)La habilidad de lucha de rolando cambiando la cantidad de perlas del collar a 3, es de 11 puntos" {
+		collarDivino.cantidadDePerlas(3)
+		assert.equals(rolando.habilidadDeLucha(), 11)
+	}
+
+	test"4)Con un valor base de 8, la habilidad de lucha de rolando es de 22 puntos" {
+		rolando.valorLucha(8)
+		assert.equals(rolando.habilidadDeLucha(), 20)
+	}
+
+	test"5)Durante un eclipse, el poder de lucha de la mascara oscura es de 5" {
+		rolando.eclipse()
+		assert.equals(mascaraOscura.unidadesLucha(), 5)
+	}
+
+	test "6)Sin la mascara oscura, la habilidad de lucha de rolando es de 9 puntos" {
+		rolando.quitarArtefacto(mascaraOscura)
+		assert.equals(rolando.habilidadDeLucha(), 9)
+	}
+
+}
+

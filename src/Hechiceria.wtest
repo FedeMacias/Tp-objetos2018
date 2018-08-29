@@ -1,0 +1,42 @@
+import Hechiceria.*
+
+describe "Tests de hechiceria" {
+
+	fixture {
+		rolando.hechizoFavorito(espectroMalefico)
+	}
+
+	test "1)El nivel de hechiceria de rolando es de 56 puntos" {
+		assert.equals(rolando.nivelHechiceria(), 56)
+	}
+
+	test "2)El nivel de hechiceria de rolando con el hechizo ´espectro superrecontramalefico muajajaja´ es de 125 puntos" {
+		espectroMalefico.nombre("espectro superrecontramalefico muajajaja")
+		assert.equals(rolando.nivelHechiceria(), 125)
+	}
+
+	test "3)El nivel de hechiceria de rolando con el hechizo basico es de 35 puntos" {
+		rolando.hechizoFavorito(hechizoBasico)
+		assert.equals(rolando.nivelHechiceria(), 35)
+	}
+
+	test "4)El nivel de hechiceria de rolando durante un eclipse es de 61 puntos" {
+		rolando.eclipse()
+		assert.equals(rolando.nivelHechiceria(), 61)
+	}
+
+	test "5)Es espectro malefico es poderoso" {
+		assert.that(espectroMalefico.hechizoPoderoso())
+	}
+
+	test "6)Espectro malefico llamado pepe NO es poderoso" {
+		espectroMalefico.nombre("pepe")
+		assert.that(espectroMalefico.hechizoPoderoso().negate())
+	}
+
+	test "7)Hechizo basico NO es poderoso" {
+		assert.that(hechizoBasico.hechizoPoderoso().negate())
+	}
+
+}
+

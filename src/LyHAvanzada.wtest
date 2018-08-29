@@ -1,0 +1,61 @@
+import Hechiceria.*
+
+describe "Tests de lucha y hechiceria avanzada" {
+
+	const armadura = new Armadura(refuerzo = ninguno)
+
+	fixture {
+		rolando.agregarVariosArtefactos([ espadaDelDestino, collarDivino, mascaraOscura, espejoFantastico, armadura ])
+	}
+
+	test "1)rolando esta cargado" {
+		assert.that(rolando.estaCargado())
+	}
+
+	test"2)Sin armadura rolando NO esta cargado" {
+		rolando.quitarArtefacto(armadura)
+		assert.that(rolando.estaCargado().negate())
+	}
+
+	test"3)La habilidad de lucha de rolando es de 20 puntos" {
+		assert.equals(rolando.habilidadDeLucha(), 20)
+	}
+
+	test"4)Con una bendicion en la armadura, la habilidad de lucha de rolando, es de 58 puntos" {
+		armadura.refuerzo(bendicion)
+		assert.equals(rolando.habilidadDeLucha(), 58)
+	}
+
+	test"5)La habilidad de lucha de rolando con una armadura con refuerzo de cota de malla, es de 3 puntos" {
+		armadura.refuerzo(cotaDeMalla)
+		assert.equals(rolando.habilidadDeLucha(), 3)
+	}
+
+	test"6)La habilidad de lucha de rolando con la armadura reforzada por el hechizo basico, es de 12 puntos" {
+		hechizo.hechizoDeRefuerzo(hechizoBasico)
+		armadura.refuerzo(hechizo)
+		assert.equals(rolando.habilidadDeLucha(), 12)
+	}
+
+	test"7)La habilidad de lucha de rolando cona la armadura reforzada por espectro malefico, es de 19 puntos" {
+		hechizo.hechizoDeRefuerzo(espectroMalefico)
+		armadura.refuerzo(hechizo)
+		assert.equals(rolando.habilidadDeLucha(), 19)
+	}
+
+	test"8)Solo con el espejo, la habilidad de lucha de rolando es de 1 punto" {
+		rolando.quitarArtefacto(espadaDelDestino)
+		rolando.quitarArtefacto(collarDivino)
+		rolando.quitarArtefacto(mascaraOscura)
+		rolando.quitarArtefacto(armadura)
+		assert.equals(rolando.habilidadDeLucha(), 1)
+	}
+
+	test"9)Con un libro de hechizos que contiene espectro malefico y hechizo basico, el nivel de hechiceria de rolando es de 56 puntos" {
+		libroDeHechizos.agregarVariosHechizos([ espectroMalefico, hechizoBasico ])
+		rolando.hechizoFavorito(libroDeHechizos)
+		assert.equals(rolando.nivelHechiceria(), 56)
+	}
+
+}
+
