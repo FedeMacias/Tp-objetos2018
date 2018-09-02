@@ -40,7 +40,9 @@ object rolando {
 
 	method nivelHechiceria() = ( valorBase * hechizoFavorito.poderHechiceria() ) + fuerzaOscura
 
-	method habilidadDeLucha() = valorLucha + artefactos.sum({ artefacto => artefacto.unidadesLucha() })
+	method habilidadDeLucha() = valorLucha + self.poderArtefactos()
+
+	method poderArtefactos() = artefactos.sum({ artefacto => artefacto.unidadesLucha() })
 
 	method eclipse() {
 		self.fuerzaOscura(fuerzaOscura * 2)
@@ -181,15 +183,18 @@ object ninguno {
 
 object espejoFantastico {
 
-// terminar
+	method unidadesLucha() = if (rolando.artefactos().size() == 1) {
+		return 0
+	} else return rolando.artefactos().max({ artefacto => artefacto.unidadesLucha() })
+
 }
 
 object libroDeHechizos {
 
 	const hechizos = []
-	const hechizosPoderosos = hechizos.filter({ hechizo => hechizo.hechizoPoderoso() })
 
-	// la parte de hechizos poderosos no está funcionando como deberia
+	method hechizosPoderosos() = hechizos.filter({ hechizo => hechizo.hechizoPoderoso() })
+
 	method hechizos() = hechizos
 
 	method agregarHechizo(unHechizo) = hechizos.add(unHechizo)
@@ -200,7 +205,7 @@ object libroDeHechizos {
 
 	method poderHechiceria() = self.poderDeHechizosPoderosos()
 
-	method poderDeHechizosPoderosos() = hechizosPoderosos.sum({ hechizoPoderoso => hechizoPoderoso.poderHechiceria() })
+	method poderDeHechizosPoderosos() = self.hechizosPoderosos().sum({ hechizoPoderoso => hechizoPoderoso.poderHechiceria() })
 
 }
 
