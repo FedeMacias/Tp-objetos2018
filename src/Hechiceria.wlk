@@ -185,7 +185,8 @@ object espejoFantastico {
 
 	method unidadesLucha() = if (rolando.artefactos().size() == 1) {
 		return 0
-	} else return rolando.artefactos().max({ artefacto => artefacto.unidadesLucha() })
+		} 
+		else {return rolando.artefactos().max({ artefacto => artefacto.unidadesLucha() })}
 
 }
 
