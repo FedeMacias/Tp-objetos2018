@@ -21,12 +21,12 @@ describe "Tests de lucha" {
 		assert.equals(rolando.habilidadDeLucha(), 11)
 	}
 
-	test"4)Con un valor base de 8, la habilidad de lucha de rolando es de 22 puntos" {
+	test "4)Con un valor base de 8, la habilidad de lucha de rolando es de 22 puntos" {
 		rolando.valorLucha(8)
 		assert.equals(rolando.habilidadDeLucha(), 20)
 	}
 
-	test"5)Durante un eclipse, el poder de lucha de la mascara oscura es de 5" {
+	test "5)Durante un eclipse, el poder de lucha de la mascara oscura es de 5" {
 		rolando.eclipse()
 		assert.equals(mascaraOscura.unidadesLucha(), 5)
 	}

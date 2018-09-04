@@ -1,22 +1,10 @@
 object rolando {
 
-	var valorBase = 3
-	var fuerzaOscura = 5
-	var hechizoFavorito
-	var valorLucha = 1
+	var property valorBase = 3
+	var property valorLucha = 1
+	var property fuerzaOscura = 5
+	var property hechizoFavorito
 	const artefactos = []
-
-	method valorBase() = valorBase
-
-	method valorBase(nuevoValorBase) {
-		valorBase = nuevoValorBase
-	}
-
-	method valorLucha() = valorLucha
-
-	method valorLucha(nuevoValor) {
-		valorLucha = nuevoValor
-	}
 
 	method artefactos() = artefactos
 
@@ -26,17 +14,7 @@ object rolando {
 
 	method quitarArtefacto(unArtefacto) = artefactos.remove(unArtefacto)
 
-	method fuerzaOscura() = fuerzaOscura
-
-	method fuerzaOscura(nuevaFuerzaOscura) {
-		fuerzaOscura = nuevaFuerzaOscura
-	}
-
-	method hechizoFavorito() = hechizoFavorito
-
-	method hechizoFavorito(nuevoHechizoFavorito) {
-		hechizoFavorito = nuevoHechizoFavorito
-	}
+	method quitarTodoArtefacto() = artefactos.clear()
 
 	method nivelHechiceria() = ( valorBase * hechizoFavorito.poderHechiceria() ) + fuerzaOscura
 
@@ -58,13 +36,7 @@ object rolando {
 
 object espectroMalefico {
 
-	var nombre = "Espectro malefico"
-
-	method nombre() = nombre
-
-	method nombre(nuevoNombre) {
-		nombre = nuevoNombre
-	}
+	var property nombre = "Espectro malefico"
 
 	method poderHechiceria() = nombre.size()
 
@@ -74,13 +46,7 @@ object espectroMalefico {
 
 object hechizoBasico {
 
-	var poderHechiceria = 10
-
-	method poderHechiceria() = poderHechiceria
-
-	method poder(nuevoPoder) {
-		poderHechiceria = nuevoPoder
-	}
+	var property poderHechiceria = 10
 
 	method hechizoPoderoso() = self.poderHechiceria() >= 15
 
@@ -88,25 +54,13 @@ object hechizoBasico {
 
 object espadaDelDestino {
 
-	var unidadesLucha = 3
-
-	method unidadesLucha() = unidadesLucha
-
-	method unidadesLucha(nuevasUnidadesLucha) {
-		unidadesLucha = nuevasUnidadesLucha
-	}
+	method unidadesLucha() = 3
 
 }
 
 object collarDivino {
 
-	var cantidadDePerlas
-
-	method cantidadDePerlas() = cantidadDePerlas
-
-	method cantidadDePerlas(nuevaCantidadPerlas) {
-		cantidadDePerlas = nuevaCantidadPerlas
-	}
+	var property cantidadDePerlas = 0
 
 	method unidadesLucha() = cantidadDePerlas
 
@@ -122,34 +76,28 @@ object mascaraOscura {
 
 class Armadura {
 
-	var valorBase = 2
 	var refuerzo
+	const valorBase = 2
 
-	method valorBase() = valorBase
-
-	method valorBase(nuevoValorBase) {
-		valorBase = nuevoValorBase
+	constructor() {
+		refuerzo = 0
 	}
 
-	method refuerzo() = refuerzo
-
-	method refuerzo(nuevoRefuerzo) {
-		refuerzo = nuevoRefuerzo
+	constructor(_refuerzo) {
+		refuerzo = _refuerzo.valorDeRefuerzo()
+	}
+	
+	method refuerzo(_refuerzo) {
+		refuerzo = _refuerzo.valorDeRefuerzo()
 	}
 
-	method unidadesLucha() = valorBase + refuerzo.valorDeRefuerzo()
+	method unidadesLucha() = valorBase + refuerzo
 
 }
 
 object cotaDeMalla {
 
-	var valorDeRefuerzo = 1
-
-	method valorDeRefuerzo() = valorDeRefuerzo
-
-	method valorDeRefuerzo(nuevoValorDeRefuerzo) {
-		valorDeRefuerzo = nuevoValorDeRefuerzo
-	}
+	method valorDeRefuerzo() = 1
 
 }
 
@@ -161,32 +109,23 @@ object bendicion {
 
 object hechizo {
 
-	var hechizoDeRefuerzo
-
-	method hechizoDeRefuerzo() = hechizoDeRefuerzo
-
-	method hechizoDeRefuerzo(nuevoHechizo) {
-		hechizoDeRefuerzo = nuevoHechizo
-	}
+	var property hechizoDeRefuerzo
 
 	method valorDeRefuerzo() = hechizoDeRefuerzo.poderHechiceria()
 
 }
 
-object ninguno {
-
-	const valorDeRefuerzo = 0
-
-	method valorDeRefuerzo() = valorDeRefuerzo
-
-}
-
 object espejoFantastico {
-
-	method unidadesLucha() = if (rolando.artefactos().size() == 1) {
-		return 0
-		} 
-		else {return rolando.artefactos().max({ artefacto => artefacto.unidadesLucha() })}
+	
+	method unidadesLucha() {
+		const artefactos = rolando.artefactos().copy()
+		artefactos.remove(self)
+		if(artefactos.isEmpty()) {
+			return 0
+		} else {
+			return artefactos.map({ artefacto => artefacto.unidadesLucha() }).max()
+		}	
+	}
 
 }
 
