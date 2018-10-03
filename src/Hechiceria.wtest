@@ -1,4 +1,6 @@
-import Hechiceria.*
+import Personaje.*
+import Artefacto.*
+import FeriaHechiceria.*
 
 describe "Tests de hechiceria" {
 
@@ -31,11 +33,11 @@ describe "Tests de hechiceria" {
 
 	test "6)Espectro malefico llamado pepe NO es poderoso" {
 		espectroMalefico.nombre("pepe")
-		assert.that(espectroMalefico.hechizoPoderoso().negate())
+		assert.notThat(espectroMalefico.hechizoPoderoso())
 	}
 
 	test "7)Hechizo basico NO es poderoso" {
-		assert.that(hechizoBasico.hechizoPoderoso().negate())
+		assert.notThat(hechizoBasico.hechizoPoderoso())
 	}
 
 }

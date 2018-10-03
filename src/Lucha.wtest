@@ -1,4 +1,6 @@
-import Hechiceria.*
+import Personaje.*
+import Artefacto.*
+import FeriaHechiceria.*
 
 describe "Tests de lucha" {
 
@@ -8,7 +10,7 @@ describe "Tests de lucha" {
 	}
 
 	test "1)Sin artefactos la habilidad de lucha de rolando, es de 1 punto" {
-		rolando.artefactos().clear()
+		rolando.quitarTodoArtefacto()
 		assert.equals(rolando.habilidadDeLucha(), 1)
 	}
 

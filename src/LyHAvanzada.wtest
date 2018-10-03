@@ -1,4 +1,6 @@
-import Hechiceria.*
+import Personaje.*
+import Artefacto.*
+import FeriaHechiceria.*
 
 describe "Tests de lucha y hechiceria avanzada" {
 
@@ -16,7 +18,7 @@ describe "Tests de lucha y hechiceria avanzada" {
 
 	test "2)Sin armadura rolando NO esta cargado" {
 		rolando.quitarArtefacto(armadura)
-		assert.that(rolando.estaCargado().negate())
+		assert.notThat(rolando.estaCargado())
 	}
 
 	test "3)La habilidad de lucha de rolando es de 20 puntos" {
@@ -34,14 +36,12 @@ describe "Tests de lucha y hechiceria avanzada" {
 	}
 
 	test "6)La habilidad de lucha de la armadura reforzada por el hechizo basico es de 12 puntos" {
-		hechizo.hechizoDeRefuerzo(hechizoBasico)
-		armadura.refuerzo(hechizo)
+		armadura.refuerzo(hechizoBasico)
 		assert.equals(armadura.unidadesLucha(), 12)
 	}
 
 	test "7)La habilidad de la armadura reforzada por espectro malefico es de 19 puntos" {
-		hechizo.hechizoDeRefuerzo(espectroMalefico)
-		armadura.refuerzo(hechizo)
+		armadura.refuerzo(espectroMalefico)
 		assert.equals(armadura.unidadesLucha(), 19)
 	}
 
