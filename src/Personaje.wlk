@@ -6,6 +6,7 @@ class Personaje {
 	var property valorBase = 3
 	var property valorLucha = 1
 	var property hechizoFavorito
+	var property monedasOro = 100
 	const artefactos = []
 
 	method artefactos() = artefactos
@@ -29,6 +30,19 @@ class Personaje {
 	method sosMejorLuchadorQueHechicero() = self.habilidadDeLucha() > self.nivelHechiceria()
 
 	method estaCargado() = self.artefactos().size() >= 5
+	
+	method ganarMonedas(unasMonedas){
+		self.monedasOro(self.monedasOro()+ unasMonedas)
+	}
+	
+	method quitarMonedas(unasMonedas) {
+		
+		self.monedasOro((self.monedasOro()- unasMonedas).max(0))
+	}
+	
+	method cumplirObjetivo(){
+		self.ganarMonedas(10)
+	}
 
 }
 
@@ -50,16 +64,21 @@ class Logo {
 	method hechizoPoderoso() = self.poderHechiceria() >= 15
 
 	method valorDeRefuerzo() = self.poderHechiceria()
+	
+	method precio() = self.poderHechiceria()
 
 }
 
-object hechizoBasico {
+class HechizoBasico {
 
 	var property poderHechiceria = 10
+	var property precio = 1
 
 	method hechizoPoderoso() = self.poderHechiceria() >= 15
 
 	method valorDeRefuerzo() = self.poderHechiceria()
+	
+	method precio() = 10
 
 }
 

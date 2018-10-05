@@ -4,12 +4,17 @@ import FeriaHechiceria.*
 
 describe "Tests de lucha y hechiceria avanzada" {
 
+	const rolando = new Personaje()
 	const armadura = new Armadura()
+	const collarDivino = new CollarDivino()
+	const hechizoBasico = new HechizoBasico()
+	const espectroMalefico = new Logo(nombre = "espectroMalefico")
+	const armaduraExtra = new Armadura(valorBase = 5).refuerzo(new CotaDeMalla(valorDeRefuerzo = 6))
 
 	fixture {
-		rolando.agregarVariosArtefactos([ espadaDelDestino, collarDivino, mascaraOscura, espejoFantastico, armadura ])
+		rolando.agregarVariosArtefactos([ new EspadaDelDestino(), collarDivino, new MascaraOscura(), espejoFantastico, armadura ])
 		collarDivino.cantidadDePerlas(5)
-		rolando.hechizoFavorito(espectroMalefico)
+		rolando.hechizoFavorito(new Logo(nombre = "espectroMalefico"))
 	}
 
 	test "1)rolando esta cargado" {
@@ -31,7 +36,7 @@ describe "Tests de lucha y hechiceria avanzada" {
 	}
 
 	test "5)La habilidad de lucha de una armadura con refuerzo de cota de malla es de 3 puntos" {
-		armadura.refuerzo(cotaDeMalla)
+		armadura.refuerzo(new CotaDeMalla())
 		assert.equals(armadura.unidadesLucha(), 3)
 	}
 
@@ -57,5 +62,10 @@ describe "Tests de lucha y hechiceria avanzada" {
 		assert.equals(rolando.nivelHechiceria(), 56)
 	}
 	
+	test "10)La habilidad de lucha de Rolando con una armadura extra con refuerzo de cota de malla es de 37 puntos"{
+		rolando.agregarArtefacto(armaduraExtra)
+		assert.equals(rolando.nivelHechiceria(), 37)		
+	}
+
 }
 

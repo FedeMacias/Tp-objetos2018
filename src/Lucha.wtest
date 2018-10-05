@@ -4,9 +4,12 @@ import FeriaHechiceria.*
 
 describe "Tests de lucha" {
 
+	const rolando = new Personaje()
+	const collarDivino = new CollarDivino(cantidadDePerlas = 5)
+	const mascaraOscura = new MascaraOscura()
+
 	fixture {
-		rolando.agregarVariosArtefactos([ espadaDelDestino, collarDivino, mascaraOscura ])
-		collarDivino.cantidadDePerlas(5)
+		rolando.agregarVariosArtefactos([ new EspadaDelDestino(), collarDivino, new MascaraOscura() ])
 	}
 
 	test "1)Sin artefactos la habilidad de lucha de rolando, es de 1 punto" {
@@ -29,7 +32,7 @@ describe "Tests de lucha" {
 	}
 
 	test "5)Durante un eclipse, el poder de lucha de la mascara oscura es de 5" {
-		rolando.eclipse()
+		fuerzaOscura.eclipse()
 		assert.equals(mascaraOscura.unidadesLucha(), 5)
 	}
 

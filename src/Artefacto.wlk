@@ -9,6 +9,8 @@ class Arma inherits Artefacto {
 
 	method unidadesLucha() = 3
 
+	method precio() = 5 * self.unidadesLucha()
+
 }
 
 class EspadaDelDestino inherits Arma {
@@ -32,6 +34,8 @@ class CollarDivino inherits Artefacto {
 	var property cantidadDePerlas = 0
 
 	method unidadesLucha() = cantidadDePerlas
+
+	method precio() = 2 * self.cantidadDePerlas()
 
 }
 
@@ -58,6 +62,8 @@ object espejoFantastico inherits Artefacto {
 		}
 	}
 
+	method precio() = 90
+
 }
 
 object libroDeHechizos inherits Artefacto {
@@ -75,6 +81,8 @@ object libroDeHechizos inherits Artefacto {
 	method poderHechiceria() = self.poderDeHechizosPoderosos()
 
 	method poderDeHechizosPoderosos() = self.hechizosPoderosos().sum({ hechizoPoderoso => hechizoPoderoso.poderHechiceria() })
+	
+	method precio() = (10 * self.hechizos().size()) + self.hechizos().sum({hechizo => hechizo.poderHechiceria()})
 
 }
 
