@@ -61,7 +61,7 @@ describe "Tests de comercio" {
 	
 	test "9)Xenia canjea por libro de hechizos que contiene el hechizo de logos de nombre “alacachula cachicomula” y el hechizo básico, le quedan 69 monedas" {
 		libroDeHechizos.agregarVariosHechizos([alacachulaCachicomula,hechizoBasico])
-		feriaHechiceria.comprarArtefacto(xenia,libroDeHechizos)
+		feriaHechiceria.canjearHechizo(xenia,libroDeHechizos)
 		assert.equals(xenia.monedasOro(),69)
 	}
 

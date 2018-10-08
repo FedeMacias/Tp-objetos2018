@@ -55,13 +55,11 @@ class MascaraOscura inherits Artefacto {
 object espejoFantastico inherits Artefacto {
 
 	method unidadesLucha() {
-		const artefactos = duenio.artefactos().copy()
-		const poderesArtefactos = artefactos.map({ artefacto => artefacto.unidadesLucha() })
-		artefactos.remove(self)
+		const artefactos = duenio.artefactos().filter({ artefacto => artefacto != self })
 		if (artefactos.isEmpty()) {
 			return 0
 		} else {
-			return poderesArtefactos.max()
+			return artefactos.max({ artefacto => artefacto.unidadesLucha() })
 		}
 	}
 
@@ -85,7 +83,7 @@ object libroDeHechizos inherits Artefacto {
 
 	method poderDeHechizosPoderosos() = self.hechizosPoderosos().sum({ hechizoPoderoso => hechizoPoderoso.poderHechiceria() })
 
-	method precio() = (10 * self.hechizos().size()) + self.hechizos().sum({ hechizo => hechizo.poderHechiceria() })
+	method precio() = (10 * self.hechizos().size()) + self.poderDeHechizosPoderosos()
 
 }
 
