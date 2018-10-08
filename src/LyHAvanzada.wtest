@@ -5,16 +5,15 @@ import FeriaHechiceria.*
 describe "Tests de lucha y hechiceria avanzada" {
 
 	const rolando = new Personaje()
-	const armadura = new Armadura()
-	const collarDivino = new CollarDivino()
+	const armadura = new Armadura(duenio = rolando)
+	const collarDivino = new CollarDivino(duenio = rolando,cantidadDePerlas = 5)
 	const hechizoBasico = new HechizoBasico()
-	const espectroMalefico = new Logo(nombre = "espectroMalefico")
-	const armaduraExtra = new Armadura(valorBase = 5).refuerzo(new CotaDeMalla(valorDeRefuerzo = 6))
+	const espectroMalefico = new Logo(nombre = "espectro malefico")
+	const armaduraExtra = new Armadura(valorBase = 5, refuerzoArmadura = new CotaDeMalla(valorDeRefuerzo = 6),duenio = rolando)
 
 	fixture {
 		rolando.agregarVariosArtefactos([ new EspadaDelDestino(), collarDivino, new MascaraOscura(), espejoFantastico, armadura ])
-		collarDivino.cantidadDePerlas(5)
-		rolando.hechizoFavorito(new Logo(nombre = "espectroMalefico"))
+		rolando.hechizoFavorito(new Logo(nombre = "espectro malefico"))
 	}
 
 	test "1)rolando esta cargado" {
@@ -31,22 +30,22 @@ describe "Tests de lucha y hechiceria avanzada" {
 	}
 
 	test "4)Con una bendicion en la armadura, la habilidad de lucha de la armadura es de 58 puntos" {
-		armadura.refuerzo(bendicion)
+		armadura.refuerzoArmadura(new Bendicion(duenio = rolando))
 		assert.equals(armadura.unidadesLucha(), 58)
 	}
 
 	test "5)La habilidad de lucha de una armadura con refuerzo de cota de malla es de 3 puntos" {
-		armadura.refuerzo(new CotaDeMalla())
+		armadura.refuerzoArmadura(new CotaDeMalla())
 		assert.equals(armadura.unidadesLucha(), 3)
 	}
 
 	test "6)La habilidad de lucha de la armadura reforzada por el hechizo basico es de 12 puntos" {
-		armadura.refuerzo(hechizoBasico)
+		armadura.refuerzoArmadura(hechizoBasico)
 		assert.equals(armadura.unidadesLucha(), 12)
 	}
 
 	test "7)La habilidad de la armadura reforzada por espectro malefico es de 19 puntos" {
-		armadura.refuerzo(espectroMalefico)
+		armadura.refuerzoArmadura(espectroMalefico)
 		assert.equals(armadura.unidadesLucha(), 19)
 	}
 
@@ -61,10 +60,10 @@ describe "Tests de lucha y hechiceria avanzada" {
 		rolando.hechizoFavorito(libroDeHechizos)
 		assert.equals(rolando.nivelHechiceria(), 56)
 	}
-	
-	test "10)La habilidad de lucha de Rolando con una armadura extra con refuerzo de cota de malla es de 37 puntos"{
+
+	test "10)La habilidad de lucha de Rolando con una armadura extra con refuerzo de cota de malla es de 37 puntos" {
 		rolando.agregarArtefacto(armaduraExtra)
-		assert.equals(rolando.nivelHechiceria(), 37)		
+		assert.equals(rolando.nivelHechiceria(), 37)
 	}
 
 }

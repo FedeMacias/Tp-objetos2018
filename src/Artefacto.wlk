@@ -3,6 +3,8 @@ import FeriaHechiceria.*
 
 class Artefacto {
 
+	var duenio = new Personaje()
+
 }
 
 class Arma inherits Artefacto {
@@ -46,19 +48,20 @@ class MascaraOscura inherits Artefacto {
 
 	method unidadesLucha() = unidadesLucha.max(self.poderMascara())
 
-	method poderMascara() = self.indiceDeOscuridad() * (fuerzaOscura.fuerzaOscura() / 2)
+	method poderMascara() = self.indiceDeOscuridad() * (fuerzaOscura.fuerzaOscura().div(2))
 
 }
 
 object espejoFantastico inherits Artefacto {
 
 	method unidadesLucha() {
-		const artefactos = unPersonaje.artefactos().copy()
+		const artefactos = duenio.artefactos().copy()
+		const poderesArtefactos = artefactos.map({ artefacto => artefacto.unidadesLucha() })
 		artefactos.remove(self)
 		if (artefactos.isEmpty()) {
 			return 0
 		} else {
-			return artefactos.map({ artefacto => artefacto.unidadesLucha() }).max()
+			return poderesArtefactos.max()
 		}
 	}
 
@@ -81,19 +84,19 @@ object libroDeHechizos inherits Artefacto {
 	method poderHechiceria() = self.poderDeHechizosPoderosos()
 
 	method poderDeHechizosPoderosos() = self.hechizosPoderosos().sum({ hechizoPoderoso => hechizoPoderoso.poderHechiceria() })
-	
-	method precio() = (10 * self.hechizos().size()) + self.hechizos().sum({hechizo => hechizo.poderHechiceria()})
+
+	method precio() = (10 * self.hechizos().size()) + self.hechizos().sum({ hechizo => hechizo.poderHechiceria() })
 
 }
 
 class Armadura inherits Artefacto {
 
-	var property refuerzo = refuerzoNulo
+	var property refuerzoArmadura = refuerzoNulo
 	const property valorBase = 2
 
 	method unidadesLucha() = self.valorBase() + self.refuerzo()
 
-	method refuerzo() = self.refuerzo().valorDeRefuerzo()
+	method refuerzo() = self.refuerzoArmadura().valorDeRefuerzo()
 
 }
 
@@ -109,9 +112,11 @@ object refuerzoNulo {
 
 }
 
-object bendicion {
+class Bendicion {
 
-	method valorDeRefuerzo() = unPersonaje.nivelHechiceria()
+	var duenio = new Personaje()
+
+	method valorDeRefuerzo() = duenio.nivelHechiceria()
 
 }
 

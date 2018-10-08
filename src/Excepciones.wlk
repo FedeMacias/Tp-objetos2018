@@ -1,0 +1,3 @@
+class ExcepcionPorFaltaDeFondos inherits Exception {
+	
+}

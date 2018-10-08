@@ -72,7 +72,7 @@ class Logo {
 class HechizoBasico {
 
 	var property poderHechiceria = 10
-	var property precio = 1
+	var property precio = 10
 
 	method hechizoPoderoso() = self.poderHechiceria() >= 15
 
