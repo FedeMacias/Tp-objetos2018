@@ -34,7 +34,7 @@ describe "Tests de comercio" {
 	test "5)Loki NO debe poder cambiar su hechizo por “alacachula cachicomula”" {
 		const mensajeError = "No tenes suficientes monedas de oro para comprar esto"		
 		const bloqueQueFalla = {feriaHechiceria.canjearHechizo(loki,alacachulaCachicomula)}
-		const excepcion = throw new ExcepcionPorFaltaDeFondos(mensajeError) 
+		const excepcion = new ExcepcionPorFaltaDeFondos(mensajeError) 
 		assert.throwsExceptionLike(excepcion,bloqueQueFalla)
 	}
 	
@@ -55,7 +55,7 @@ describe "Tests de comercio" {
 	test "8)Loki no puede comprar el espejo Fantastico"{
 		const mensajeError = "No tenes suficientes monedas de oro para comprar esto"
 		const bloqueQueFalla = {feriaHechiceria.comprarArtefacto(loki,espejoFantastico)}
-		const excepcion = throw new ExcepcionPorFaltaDeFondos(mensajeError) 
+		const excepcion = new ExcepcionPorFaltaDeFondos(mensajeError) 
 		assert.throwsExceptionLike(excepcion,bloqueQueFalla)	
 	}
 	
