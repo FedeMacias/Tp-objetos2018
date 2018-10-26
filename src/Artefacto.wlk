@@ -1,4 +1,5 @@
 import Personaje.*
+import Comerciante.*
 
 class Artefacto {
 

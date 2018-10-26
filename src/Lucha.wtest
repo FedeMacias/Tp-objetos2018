@@ -1,5 +1,6 @@
 import Personaje.*
 import Artefacto.*
+import Comerciante.*
 
 describe "Tests de lucha" {
 

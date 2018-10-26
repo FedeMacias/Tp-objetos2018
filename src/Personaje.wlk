@@ -1,5 +1,6 @@
 import Artefacto.*
 import Excepciones.*
+import Comerciante.*
 
 class Personaje {
 
@@ -98,9 +99,9 @@ class Personaje {
 		}
 	}
 
-	method comprarArtefacto(unPersonaje, unArtefactoNuevo) {
-		if (unPersonaje.monedasOro() > unArtefactoNuevo.precio()) {
-			unPersonaje.quitarMonedas(unArtefactoNuevo.precio())
+	method comprarArtefacto(unPersonaje, unArtefactoNuevo, unComerciante) {
+		if (unPersonaje.monedasOro() > unArtefactoNuevo.precio() + unComerciante.impuestoSobre(unArtefactoNuevo)) {
+			unPersonaje.quitarMonedas(unArtefactoNuevo.precio() + unComerciante.impuestoSobre(unArtefactoNuevo))
 			unPersonaje.agregarArtefacto(unArtefactoNuevo)
 		} else {
 			throw new ExcepcionPorFaltaDeFondos("No tenes suficientes monedas de oro para comprar esto")
