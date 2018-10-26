@@ -1,6 +1,5 @@
 import Personaje.*
 import Artefacto.*
-import FeriaHechiceria.*
 
 describe "Tests de lucha y hechiceria avanzada" {
 
@@ -10,7 +9,7 @@ describe "Tests de lucha y hechiceria avanzada" {
 	const hechizoBasico = new HechizoBasico()
 	const espectroMalefico = new Logo(nombre = "espectro malefico")
 	const armaduraExtra = new Armadura(valorBase = 5, refuerzoArmadura = new CotaDeMalla(valorDeRefuerzo = 6), duenio = rolando)
-	const espadaDelDestino = new EspadaDelDestino()
+	const espadaDelDestino = new ArmaAfilada()
 	const mascaraOscura = new MascaraOscura()
 
 	fixture {

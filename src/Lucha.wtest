@@ -1,15 +1,15 @@
 import Personaje.*
 import Artefacto.*
-import FeriaHechiceria.*
 
 describe "Tests de lucha" {
 
 	const rolando = new Personaje()
 	const collarDivino = new CollarDivino(cantidadDePerlas = 5)
 	const mascaraOscura = new MascaraOscura()
+	const mascaraNadaOscura = new MascaraOscura(indiceDeOscuridad = 0)
 
 	fixture {
-		rolando.agregarVariosArtefactos([ new EspadaDelDestino(), collarDivino, mascaraOscura ])
+		rolando.agregarVariosArtefactos([ new ArmaAfilada(), collarDivino, mascaraOscura ])
 	}
 
 	test "1)Sin artefactos la habilidad de lucha de rolando, es de 1 punto" {
@@ -39,6 +39,15 @@ describe "Tests de lucha" {
 	test "6)Sin la mascara oscura, la habilidad de lucha de rolando es de 9 puntos" {
 		rolando.quitarArtefacto(mascaraOscura)
 		assert.equals(rolando.habilidadDeLucha(), 9)
+	}
+	
+	test "7)Una mascara para nada oscura tiene un valor de lucha de 4 (el minimo)"{
+		assert.equals(mascaraNadaOscura.unidadesLucha(), 4)
+	}
+	
+	test "8)Una mascara nada oscura con un valor minimo de 2 tiene un vlaor de lucha de 2"{
+		mascaraNadaOscura.unidadesLucha(2)
+		assert.equals(mascaraNadaOscura.unidadesLucha(), 2)
 	}
 
 }

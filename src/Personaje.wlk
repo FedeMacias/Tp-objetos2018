@@ -1,23 +1,51 @@
 import Artefacto.*
-import FeriaHechiceria.*
+import Excepciones.*
 
 class Personaje {
 
-	var property valorBase = 3
 	var property valorLucha = 1
 	var property hechizoFavorito
 	var property monedasOro = 100
-	const artefactos = []
+	const property maximoEquipaje = 1
+	var property equipaje = 1
+	const property artefactos = []
 
-	method artefactos() = artefactos
+	method valorBase() = 3
 
-	method agregarArtefacto(unArtefacto) = self.artefactos().add(unArtefacto)
+	method agregarArtefacto(unArtefacto) {
+		if (self.equipaje() + unArtefacto.peso() < self.maximoEquipaje()) {
+			self.artefactos().add(unArtefacto)
+			self.aumentarEquipaje(unArtefacto.peso())
+		} else {
+			throw new ExcepcionPorSobrecarga("Te pasaste de peso, no podes cargar tantas cosas")
+		}
+	}
 
-	method agregarVariosArtefactos(unosArtefactos) = self.artefactos().addAll(unosArtefactos)
+	method agregarVariosArtefactos(unosArtefactos) {
+		if (self.equipaje() + unosArtefactos.sum({ artefacto => artefacto.peso() }) < self.maximoEquipaje()) {
+			self.artefactos().addAll(unosArtefactos)
+			self.aumentarEquipaje(unosArtefactos.sum({ artefacto => artefacto.peso()}))
+		} else {
+			throw new ExcepcionPorSobrecarga("Te pasaste de peso, no podes cargar tantas cosas")
+		}
+	}
 
-	method quitarArtefacto(unArtefacto) = self.artefactos().remove(unArtefacto)
+	method quitarArtefacto(unArtefacto) {
+		self.artefactos().remove(unArtefacto)
+		return self.reducirEquipaje(unArtefacto.peso())
+	}
 
-	method quitarTodoArtefacto() = self.artefactos().clear()
+	// ese return self.reducirEquipaje no me cierra
+	method quitarTodoArtefacto() {
+		self.artefactos().clear()
+		self.equipaje(0)
+	}
+
+	method equipaje() = self.artefactos().sum({ artefacto => artefacto.peso() })
+
+	method reducirEquipaje(unaCantidad) = self.equipaje(self.equipaje() - unaCantidad)
+
+	method aumentarEquipaje(unaCantidad) = self.equipaje(self.equipaje() + unaCantidad)
 
 	method nivelHechiceria() = ( self.valorBase() * self.hechizoFavorito().poderHechiceria() ) + fuerzaOscura.fuerzaOscura()
 
@@ -30,19 +58,80 @@ class Personaje {
 	method sosMejorLuchadorQueHechicero() = self.habilidadDeLucha() > self.nivelHechiceria()
 
 	method estaCargado() = self.artefactos().size() >= 5
-	
-	method ganarMonedas(unasMonedas){
-		self.monedasOro(self.monedasOro()+ unasMonedas)
+
+	method ganarMonedas(unasMonedas) {
+		self.monedasOro(self.monedasOro() + unasMonedas)
 	}
-	
+
 	method quitarMonedas(unasMonedas) {
-		
-		self.monedasOro((self.monedasOro()- unasMonedas).max(0))
+		self.monedasOro((self.monedasOro() - unasMonedas).max(0))
 	}
-	
-	method cumplirObjetivo(){
+
+	method cumplirObjetivo() {
 		self.ganarMonedas(10)
 	}
+
+	method mejorArtefacto() {
+		const artefactosSinEspejo = self.artefactos().filter({ artefacto => artefacto != espejoFantastico })
+		if (artefactosSinEspejo.isEmpty()) {
+			return 0
+		} else {
+			return artefactosSinEspejo.max({ artefacto => artefacto.unidadesLucha() })
+		}
+	}
+
+	method canjearHechizo(unPersonaje, unHechizoNuevo) {
+		if (unPersonaje.monedasOro() > unHechizoNuevo.precio()) {
+			self.transaccionPor(unPersonaje, unHechizoNuevo)
+		} else {
+			throw new ExcepcionPorFaltaDeFondos("No tenes suficientes monedas de oro para comprar esto")
+		}
+	}
+
+	method transaccionPor(unPersonaje, unHechizoNuevo) {
+		if (unPersonaje.hechizoFavorito().precio().div(2) > unHechizoNuevo.precio()) {
+			unPersonaje.hechizoFavorito(unHechizoNuevo)
+		} else {
+			unPersonaje.quitarMonedas(unHechizoNuevo.precio())
+			unPersonaje.ganarMonedas(unPersonaje.hechizoFavorito().precio().div(2).min(unHechizoNuevo.precio()))
+			unPersonaje.hechizoFavorito(unHechizoNuevo)
+		}
+	}
+
+	method comprarArtefacto(unPersonaje, unArtefactoNuevo) {
+		if (unPersonaje.monedasOro() > unArtefactoNuevo.precio()) {
+			unPersonaje.quitarMonedas(unArtefactoNuevo.precio())
+			unPersonaje.agregarArtefacto(unArtefactoNuevo)
+		} else {
+			throw new ExcepcionPorFaltaDeFondos("No tenes suficientes monedas de oro para comprar esto")
+		}
+	}
+
+}
+
+class NPC inherits Personaje {
+
+	var property dificultad = moderado
+
+	override method habilidadDeLucha() = (self.valorLucha() + self.poderArtefactos()) * self.dificultad().multiplicador()
+
+}
+
+object facil {
+
+	method multiplicador() = 1
+
+}
+
+object moderado {
+
+	method multiplicador() = 2
+
+}
+
+object dificil {
+
+	method multiplicador() = 4
 
 }
 
@@ -51,34 +140,6 @@ object fuerzaOscura {
 	var property fuerzaOscura = 5
 
 	method eclipse() = self.fuerzaOscura(self.fuerzaOscura() * 2)
-
-}
-
-class Logo {
-
-	var property nombre = ""
-	var property multiplicador = 1
-
-	method poderHechiceria() = self.nombre().size() * self.multiplicador()
-
-	method hechizoPoderoso() = self.poderHechiceria() >= 15
-
-	method valorDeRefuerzo() = self.poderHechiceria()
-	
-	method precio() = self.poderHechiceria()
-
-}
-
-class HechizoBasico {
-
-	var property poderHechiceria = 10
-	var property precio = 10
-
-	method hechizoPoderoso() = self.poderHechiceria() >= 15
-
-	method valorDeRefuerzo() = self.poderHechiceria()
-	
-	method precio() = 10
 
 }
 

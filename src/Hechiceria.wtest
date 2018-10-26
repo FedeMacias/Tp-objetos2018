@@ -1,6 +1,5 @@
 import Personaje.*
 import Artefacto.*
-import FeriaHechiceria.*
 
 describe "Tests de hechiceria" {
 
