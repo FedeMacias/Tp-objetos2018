@@ -5,9 +5,9 @@ import Comerciante.*
 class Personaje {
 
 	var property valorLucha = 1
-	var property hechizoFavorito
+	var property hechizoFavorito = new HechizoBasico()
 	var property monedasOro = 100
-	const property maximoEquipaje = 1
+	const property maximoEquipaje = 200
 	var property equipaje = 1
 	const property artefactos = []
 

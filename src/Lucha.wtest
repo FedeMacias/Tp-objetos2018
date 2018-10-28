@@ -8,6 +8,8 @@ describe "Tests de lucha" {
 	const collarDivino = new CollarDivino(cantidadDePerlas = 5)
 	const mascaraOscura = new MascaraOscura()
 	const mascaraNadaOscura = new MascaraOscura(indiceDeOscuridad = 0)
+	const navi = new NPC(dificultad = facil)
+	const ashleyGraham = new NPC(valorLucha = 5, artefactos = [ mascaraNadaOscura ], dificultad = moderado)
 
 	fixture {
 		rolando.agregarVariosArtefactos([ new ArmaAfilada(), collarDivino, mascaraOscura ])
@@ -41,14 +43,27 @@ describe "Tests de lucha" {
 		rolando.quitarArtefacto(mascaraOscura)
 		assert.equals(rolando.habilidadDeLucha(), 9)
 	}
-	
-	test "7)Una mascara para nada oscura tiene un valor de lucha de 4 (el minimo)"{
+
+	test "7)Una mascara para nada oscura tiene un valor de lucha de 4 (el minimo)" {
 		assert.equals(mascaraNadaOscura.unidadesLucha(), 4)
 	}
-	
-	test "8)Una mascara nada oscura con un valor minimo de 2 tiene un vlaor de lucha de 2"{
+
+	test "8)Una mascara nada oscura con un valor minimo de 2 tiene un vlaor de lucha de 2" {
 		mascaraNadaOscura.unidadesLucha(2)
 		assert.equals(mascaraNadaOscura.unidadesLucha(), 2)
+	}
+// TESTS CON NPC´S
+	test "9)La habilidad de lucha de navi es 1" {
+		assert.equals(navi.habilidadDeLucha(), 1)
+	}
+
+	test "10)La habilidad de lucha de Ashley Graham es 18" {
+		assert.equals(ashleyGraham.habilidadDeLucha(), 18)
+	}
+
+	test "11)La habilidad de lucha de Ashley Graham en dificil es de 36"{
+		ashleyGraham.dificultad(dificil)
+		assert.equals(ashleyGraham.habilidadDeLucha(), 36)
 	}
 
 }

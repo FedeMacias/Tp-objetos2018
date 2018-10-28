@@ -5,9 +5,12 @@ import Comerciante.*
 describe "Tests de hechiceria" {
 
 	const rolando = new Personaje()
+	const hechizoComercial = new HechizoComercial(nombre="el hechizo comercial",multiplicador = 2)
+	const espectroMalefico = new Logo(nombre = "espectro maléfico")
+	const furibunda = new Personaje(hechizoFavorito = hechizoComercial)
 
 	fixture {
-		rolando.hechizoFavorito(new Logo(nombre = "espectro malefico"))
+		rolando.hechizoFavorito(espectroMalefico)
 	}
 
 	test "1)El nivel de hechiceria de rolando es de 56 puntos" {
@@ -38,7 +41,19 @@ describe "Tests de hechiceria" {
 	}
 
 	test "7)Hechizo basico NO es poderoso" {
-		assert.notThat(new HechizoBasico() .hechizoPoderoso())
+		assert.notThat(new HechizoBasico().hechizoPoderoso())
+	}
+
+	test "8)El nivel de hechiceria de furibunda es de 29" {
+		assert.equals(furibunda.nivelHechiceria(), 29)
+	}
+
+	test "9)El hechizo comercial NO es poderoso" {
+		assert.notThat(hechizoComercial.hechizoPoderoso())
+	}
+
+	test "10)El espectro malefico es poderoso" {
+		assert.that(espectroMalefico.hechizoPoderoso())
 	}
 
 }

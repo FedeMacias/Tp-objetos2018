@@ -4,8 +4,8 @@ import Comerciante.*
 class Artefacto {
 
 	var property duenio = new Personaje()
-	var property pesoInicial = 1
-	var property fechaDeCompra = new Date(1, 1, 1)
+	var property pesoInicial = 0
+	var property fechaDeCompra = new Date()
 	const property fechaDeHoy = new Date()
 
 	method factorDeReduccion() = ((self.fechaDeHoy() - self.fechaDeCompra()) / 1000).min(1)
@@ -147,7 +147,8 @@ class Logo {
 
 class HechizoComercial inherits Logo {
 
-	var property porcentaje = 0.2
+	var property porcentaje = 0.20
+	
 
 	override method poderHechiceria() = self.nombre().size() * self.porcentaje() * self.multiplicador()
 
