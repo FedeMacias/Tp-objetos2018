@@ -10,6 +10,7 @@ describe "Tests de comercio" {
 	const thor = new Personaje(hechizoFavorito = new HechizoBasico())
 	const loki = new Personaje(hechizoFavorito = new HechizoBasico(), monedasOro = 5)
 	const hechizoBasico = new HechizoBasico()
+	const mockHnos 
 
 	test "1)El precio de lista de “alacachula cachicomula” es de 22 monedas" {
 		assert.equals(alacachulaCachicomula.precio(),22)
@@ -39,30 +40,30 @@ describe "Tests de comercio" {
 	}
 	
 	test "6)Xenia compra una espada,un collar divino de 5 perlas,una armadura sin refuerzo,y una armadura con cota de malla de 5, entonces tiene 4 artefactos" {
-		xenia.comprarArtefacto(xenia,new ArmaAfilada())
-		xenia.comprarArtefacto(xenia,new Armadura(duenio = xenia))
-		xenia.comprarArtefacto(xenia,new CollarDivino(cantidadDePerlas= 5))
-		xenia.comprarArtefacto(xenia,new Armadura(refuerzoArmadura = new CotaDeMalla(valorDeRefuerzo = 5),duenio = xenia))
+		xenia.comprarArtefacto(xenia,new ArmaAfilada(),mockHnos)
+		xenia.comprarArtefacto(xenia,new Armadura(duenio = xenia),mockHnos)
+		xenia.comprarArtefacto(xenia,new CollarDivino(cantidadDePerlas= 5),mockHnos)
+		xenia.comprarArtefacto(xenia,new Armadura(refuerzoArmadura = new CotaDeMalla(valorDeRefuerzo = 5),duenio = xenia),mockHnos)
 		assert.equals(xenia.artefactos().size(),4)
 	}
 	
 	test "7)Xenia compra  compra una espada, un collar divino (de 5 perlas), una armadura sin refuerzo y otra armadura con malla de cota cuyo valor de lucha es 5 y le quedan 70,5 monedas"{
-		xenia.comprarArtefacto(xenia,new ArmaAfilada())
-		xenia.comprarArtefacto(xenia,new Armadura(duenio = xenia))
-		xenia.comprarArtefacto(xenia,new CollarDivino(cantidadDePerlas= 5))
-		xenia.comprarArtefacto(xenia,new Armadura(refuerzoArmadura = new CotaDeMalla(valorDeRefuerzo = 5),duenio = xenia))
+		xenia.comprarArtefacto(xenia,new ArmaAfilada(),mockHnos)
+		xenia.comprarArtefacto(xenia,new Armadura(duenio = xenia),mockHnos)
+		xenia.comprarArtefacto(xenia,new CollarDivino(cantidadDePerlas= 5),mockHnos)
+		xenia.comprarArtefacto(xenia,new Armadura(refuerzoArmadura = new CotaDeMalla(valorDeRefuerzo = 5),duenio = xenia),mockHnos)
 		assert.equals(xenia.monedasOro(),70.5)
 	}
 
 	test "8)Thor compra una armadura con bendición como refuerzo, y una armadura reforzada con el hechizo alacachula, le quedan 74 monedas" {
-		thor.comprarArtefacto(thor,new Armadura(refuerzoArmadura = new Bendicion(duenio = xenia)))
-		thor.comprarArtefacto(thor,new Armadura(refuerzoArmadura = alacachulaCachicomula))
+		thor.comprarArtefacto(thor,new Armadura(refuerzoArmadura = new Bendicion(duenio = thor)),mockHnos)
+		thor.comprarArtefacto(thor,new Armadura(refuerzoArmadura = alacachulaCachicomula),mockHnos)
 		assert.equals(thor.monedasOro(),74)
 	}
 	
 	test "9)Loki no puede comprar el espejo Fantastico"{
 		const mensajeError = "No tenes suficientes monedas de oro para comprar esto"
-		const bloqueQueFalla = {loki.comprarArtefacto(loki,espejoFantastico)}
+		const bloqueQueFalla = {loki.comprarArtefacto(loki,espejoFantastico,mockHnos)}
 		const excepcion = new ExcepcionPorFaltaDeFondos(mensajeError) 
 		assert.throwsExceptionLike(excepcion,bloqueQueFalla)	
 	}

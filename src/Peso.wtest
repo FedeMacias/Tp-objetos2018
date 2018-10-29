@@ -1,0 +1,84 @@
+import Personaje.*
+import Artefacto.*
+import Excepciones.*
+import Comerciante.*
+
+describe "Tests sobre peso" {
+
+	const hechizoComercial = new HechizoComercial(nombre = "el hechizo comercial", multiplicador = 2)
+	const espectroMalefico = new Logo(nombre = "espectro maléfico")
+	const espadaVieja = new ArmaAfilada(pesoInicial = 7, fechaDeCompra = new Date(7, 5, 2006))
+	const espadaNueva = new ArmaAfilada(pesoInicial = 4, fechaDeCompra = new Date())
+	const espadaComun = new ArmaAfilada(pesoInicial = 5, diasDeUso = 50)
+	const collarDivino = new CollarDivino()
+	const mascaraOscura = new MascaraOscura(unidadesLucha = 1, pesoInicial = 3)
+	const mascaraClara = new MascaraOscura(unidadesLucha = 0, indiceDeOscuridad = 0, pesoInicial = 2)
+	const armaduraConCota = new Armadura(refuerzoArmadura = new CotaDeMalla(), pesoInicial = 10)
+	const armaduraHechizoPar = new Armadura(refuerzoArmadura = hechizoComercial, pesoInicial = 12)
+	const armaduraHechizoImpar = new Armadura(refuerzoArmadura = espectroMalefico, pesoInicial = 12)
+	const armaduraSola = new Armadura(pesoInicial = 12)
+	const mockHnos // si no trabaja con comision entonces que es?
+	const merlin = new Personaje(maximoEquipaje = 10)
+	const ursula = new Personaje(artefactos = [ mascaraOscura, armaduraConCota ])
+
+	test "1)El peso de la espada vieja es de 6" {
+		assert.equals(espadaVieja.peso(), 6)
+	}
+
+	test "2)El peso de la espada nueva es de 4" {
+		assert.equals(espadaNueva.peso(), 4)
+	}
+
+	test "3)El peso de la espada comun es de 4.95" {
+		assert.equals(espadaComun.peso(), 4.95)
+	}
+
+	test "4)El peso del collar divino es de 2.5" {
+		assert.equals(collarDivino.peso(), 2.5)
+	}
+
+	test "5)El peso de la mascara oscura es de 3" {
+		assert.equals(mascaraOscura.peso(), 3)
+	}
+
+	test "6)El peso de la mascara oscura tras un eclipse es de 5" {
+		fuerzaOscura.eclipse()
+		assert.equals(mascaraOscura.peso(), 5)
+	}
+
+	test "7)El peso de la mascara clara es de 2" {
+		assert.equals(mascaraClara.peso(), 2)
+	}
+
+	test "8)El peso de la armadura con cota de malla es de 11" {
+		assert.equals(armaduraConCota.peso(), 11)
+	}
+
+	test "9)El peso de la armadura con el hechizo par es de 14" {
+		assert.equals(armaduraHechizoPar.peso(), 14)
+	}
+
+	test "10)El peso de la armadura con el hechizo impar es de 13" {
+		assert.equals(armaduraHechizoImpar.peso(), 14)
+	}
+
+	test "11)El peso de la armadura sin refuerzo es de 12" {
+		assert.equals(armaduraSola.peso(), 12)
+	}
+	test "12)El peso de merlin despues de comprarle a mock la mascara clara es de 5"{
+		merlin.comprarArtefacto(merlin,mascaraClara,mockHnos)
+		assert.equals(merlin.equipaje(),5)
+	}
+	test "13)Merlin NO puede comprarle la armadura con hechizo par a Mock"{
+		const mensajeError = "Te pasaste de peso, no podes cargar tantas cosas"
+		const bloqueQueFalla = {merlin.comprarArtefacto(merlin,espejoFantastico,mockHnos)}
+		const excepcion = new ExcepcionPorSobrecarga(mensajeError) 
+		assert.throwsExceptionLike(excepcion,bloqueQueFalla)
+	}
+	test "14)Ursula se desprende de la armadura con cota de malla y su nuevo peso de equipaje es de 3"{
+		ursula.quitarArtefacto(armaduraConCota)
+		assert.equals(ursula.equipaje(),3)
+	}
+
+}
+

@@ -7,9 +7,10 @@ class Artefacto {
 	var property pesoInicial = 0
 	var property fechaDeCompra = new Date()
 	const property fechaDeHoy = new Date()
+	var property diasDeUso = self.fechaDeHoy() - self.fechaDeCompra()
 
-	method factorDeReduccion() = ((self.fechaDeHoy() - self.fechaDeCompra()) / 1000).min(1)
-	
+	method factorDeReduccion() = ((self.diasDeUso()) / 1000).min(1)
+
 	method peso() = self.pesoInicial()
 
 }
@@ -20,11 +21,13 @@ class ArmaAfilada inherits Artefacto {
 
 	method precio() = 5 * self.peso()
 
+	override method peso() = self.pesoInicial() - self.factorDeReduccion()
+
 }
 
 class CollarDivino inherits Artefacto {
 
-	var property cantidadDePerlas = 0
+	var property cantidadDePerlas = 5
 
 	method unidadesLucha() = self.cantidadDePerlas()
 
@@ -46,8 +49,8 @@ class MascaraOscura inherits Artefacto {
 	override method peso() = self.pesoInicial() - self.factorDeReduccion() + self.bonusMascara()
 
 	method bonusMascara() = (self.poderMascara() - 3).max(0)
-	
-	method precio() = self.indiceDeOscuridad()*10 
+
+	method precio() = self.indiceDeOscuridad() * 10
 
 }
 
@@ -89,13 +92,18 @@ class Armadura inherits Artefacto {
 
 	var property refuerzoArmadura = refuerzoNulo
 	const property valorBase = 2
+	var property precio = 2
 
 	method unidadesLucha() = self.valorBase() + self.refuerzo()
 
 	method refuerzo() = self.refuerzoArmadura().valorDeRefuerzo()
 
 	override method peso() = self.pesoInicial() - self.factorDeReduccion() + self.refuerzoArmadura().peso()
-	//Consultar para conseguir el peso del hechizo de forma correcta
+
+	method precio() = self.precio() + self.refuerzoArmadura().precio()
+
+// Consultar para conseguir el peso del hechizo de forma correcta
+// Consultar para conseguir el precio de la armadura de la forma correcta
 }
 
 class CotaDeMalla {
@@ -103,6 +111,8 @@ class CotaDeMalla {
 	var property valorDeRefuerzo = 1
 
 	method peso() = 1
+
+	method precio() = self.valorDeRefuerzo() / 2
 
 }
 
@@ -112,15 +122,19 @@ object refuerzoNulo {
 
 	method peso() = 0
 
+	method precio() = 0
+
 }
 
 class Bendicion {
 
-	var duenio = new Personaje()
+	var property duenio = new Personaje()
 
 	method valorDeRefuerzo() = duenio.nivelHechiceria()
 
 	method peso() = 0
+
+	method precio() = self.duenio()
 
 }
 
@@ -140,7 +154,9 @@ class Logo {
 	method peso() {
 		if (self.poderHechiceria().even()) {
 			return 2
-		} else return 1
+		} else {
+			return 1
+		}
 	}
 
 }
@@ -148,16 +164,14 @@ class Logo {
 class HechizoComercial inherits Logo {
 
 	var property porcentaje = 0.20
-	
 
 	override method poderHechiceria() = self.nombre().size() * self.porcentaje() * self.multiplicador()
 
 }
 
-class HechizoBasico inherits Logo{
+class HechizoBasico inherits Logo {
 
 	override method poderHechiceria() = 10
-
 
 }
 

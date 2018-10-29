@@ -12,6 +12,8 @@ class Comerciante {
 
 }
 
+//Consultar el modelado de esto
+
 class ImpuestoPorComision {
 
 	var property comision = 0.21
