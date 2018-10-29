@@ -1,5 +1,8 @@
 import Personaje.*
 import Artefacto.*
+import NPC.*
+import Armadura.*
+import Logo.*
 
 describe "Tests de lucha y hechiceria avanzada" {
 

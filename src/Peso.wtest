@@ -2,6 +2,9 @@ import Personaje.*
 import Artefacto.*
 import Excepciones.*
 import Comerciante.*
+import NPC.*
+import Armadura.*
+import Logo.*
 
 describe "Tests sobre peso" {
 

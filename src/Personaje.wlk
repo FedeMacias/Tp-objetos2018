@@ -1,6 +1,8 @@
 import Artefacto.*
 import Excepciones.*
 import Comerciante.*
+import Logo.*
+
 
 class Personaje {
 
@@ -107,40 +109,6 @@ class Personaje {
 			throw new ExcepcionPorFaltaDeFondos("No tenes suficientes monedas de oro para comprar esto")
 		}
 	}
-
-}
-
-class NPC inherits Personaje {
-
-	var property dificultad = moderado
-
-	override method habilidadDeLucha() = (self.valorLucha() + self.poderArtefactos()) * self.dificultad().multiplicador()
-
-}
-
-object facil {
-
-	method multiplicador() = 1
-
-}
-
-object moderado {
-
-	method multiplicador() = 2
-
-}
-
-object dificil {
-
-	method multiplicador() = 4
-
-}
-
-object fuerzaOscura {
-
-	var property fuerzaOscura = 5
-
-	method eclipse() = self.fuerzaOscura(self.fuerzaOscura() * 2)
 
 }
 

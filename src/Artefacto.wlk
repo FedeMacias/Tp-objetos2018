@@ -54,6 +54,16 @@ class MascaraOscura inherits Artefacto {
 
 }
 
+
+object fuerzaOscura {
+
+	var property fuerzaOscura = 5
+
+	method eclipse() = self.fuerzaOscura(self.fuerzaOscura() * 2)
+
+}
+
+
 object espejoFantastico inherits Artefacto {
 
 	method unidadesLucha() {
@@ -87,91 +97,3 @@ object libroDeHechizos inherits Artefacto {
 	method precio() = (10 * self.hechizos().size()) + self.poderDeHechizosPoderosos()
 
 }
-
-class Armadura inherits Artefacto {
-
-	var property refuerzoArmadura = refuerzoNulo
-	const property valorBase = 2
-	var property precio = 2
-
-	method unidadesLucha() = self.valorBase() + self.refuerzo()
-
-	method refuerzo() = self.refuerzoArmadura().valorDeRefuerzo()
-
-	override method peso() = self.pesoInicial() - self.factorDeReduccion() + self.refuerzoArmadura().peso()
-
-	method precio() = self.precio() + self.refuerzoArmadura().precio()
-
-// Consultar para conseguir el peso del hechizo de forma correcta
-// Consultar para conseguir el precio de la armadura de la forma correcta
-}
-
-class CotaDeMalla {
-
-	var property valorDeRefuerzo = 1
-
-	method peso() = 1
-
-	method precio() = self.valorDeRefuerzo() / 2
-
-}
-
-object refuerzoNulo {
-
-	method valorDeRefuerzo() = 0
-
-	method peso() = 0
-
-	method precio() = 0
-
-}
-
-class Bendicion {
-
-	var property duenio = new Personaje()
-
-	method valorDeRefuerzo() = duenio.nivelHechiceria()
-
-	method peso() = 0
-
-	method precio() = self.duenio()
-
-}
-
-class Logo {
-
-	var property nombre = ""
-	var property multiplicador = 1
-
-	method poderHechiceria() = self.nombre().size() * self.multiplicador()
-
-	method hechizoPoderoso() = self.poderHechiceria() >= 15
-
-	method valorDeRefuerzo() = self.poderHechiceria()
-
-	method precio() = self.poderHechiceria()
-
-	method peso() {
-		if (self.poderHechiceria().even()) {
-			return 2
-		} else {
-			return 1
-		}
-	}
-
-}
-
-class HechizoComercial inherits Logo {
-
-	var property porcentaje = 0.20
-
-	override method poderHechiceria() = self.nombre().size() * self.porcentaje() * self.multiplicador()
-
-}
-
-class HechizoBasico inherits Logo {
-
-	override method poderHechiceria() = 10
-
-}
-

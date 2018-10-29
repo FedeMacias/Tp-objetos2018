@@ -1,0 +1,18 @@
+import Personaje.*
+import Artefacto.*
+import Excepciones.*
+import Comerciante.*
+import NPC.*
+import Armadura.*
+import Logo.*
+
+describe "Tests de comercio avanzado" {
+	
+	const ursula = new Personaje()
+
+	test "testX" {
+
+		assert.that(true)
+
+	}
+}

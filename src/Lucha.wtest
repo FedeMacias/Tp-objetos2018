@@ -1,6 +1,9 @@
 import Personaje.*
 import Artefacto.*
 import Comerciante.*
+import NPC.*
+import Armadura.*
+import Logo.*
 
 describe "Tests de lucha" {
 
