@@ -24,6 +24,8 @@ class Logo {
 		}
 	}
 
+	method vendeteA(unPersonaje, unComerciante) = unPersonaje.hechizoFavorito(self)
+
 }
 
 class HechizoComercial inherits Logo {

@@ -3,7 +3,6 @@ import Excepciones.*
 import Comerciante.*
 import Logo.*
 
-
 class Personaje {
 
 	var property valorLucha = 1
@@ -83,28 +82,29 @@ class Personaje {
 		}
 	}
 
-	method canjearHechizo(unPersonaje, unHechizoNuevo) {
-		if (unPersonaje.monedasOro() > unHechizoNuevo.precio()) {
-			self.transaccionPor(unPersonaje, unHechizoNuevo)
+	method canjearHechizo(unHechizoNuevo, unComerciante) {
+		if (self.monedasOro() > unHechizoNuevo.precio()) {
+			self.transaccion(unHechizoNuevo, unComerciante)
+			unHechizoNuevo.vendeteA(self, unComerciante)
 		} else {
 			throw new ExcepcionPorFaltaDeFondos("No tenes suficientes monedas de oro para comprar esto")
 		}
 	}
 
-	method transaccionPor(unPersonaje, unHechizoNuevo) {
-		if (unPersonaje.hechizoFavorito().precio().div(2) > unHechizoNuevo.precio()) {
-			unPersonaje.hechizoFavorito(unHechizoNuevo)
+	method transaccion(unHechizoNuevo, unComerciante) {
+		if (self.hechizoFavorito().precio().div(2) > unHechizoNuevo.precio()) {
+			unHechizoNuevo.vendeteA(self, unComerciante)
 		} else {
-			unPersonaje.quitarMonedas(unHechizoNuevo.precio())
-			unPersonaje.ganarMonedas(unPersonaje.hechizoFavorito().precio().div(2).min(unHechizoNuevo.precio()))
-			unPersonaje.hechizoFavorito(unHechizoNuevo)
+			self.quitarMonedas(unHechizoNuevo.precio())
+			self.ganarMonedas(self.hechizoFavorito().precio().div(2))
+			unHechizoNuevo.vendeteA(self, unComerciante)
 		}
 	}
 
-	method comprarArtefacto(unPersonaje, unArtefactoNuevo, unComerciante) {
-		if (unPersonaje.monedasOro() > unArtefactoNuevo.precio() + unComerciante.impuestoSobre(unArtefactoNuevo)) {
-			unPersonaje.quitarMonedas(unArtefactoNuevo.precio() + unComerciante.impuestoSobre(unArtefactoNuevo))
-			unPersonaje.agregarArtefacto(unArtefactoNuevo)
+	method comprarArtefacto(unArtefactoNuevo, unComerciante) {
+		if (self.monedasOro() > unArtefactoNuevo.precio() + unComerciante.impuestoSobre(unArtefactoNuevo)) {
+			self.quitarMonedas(unArtefactoNuevo.precio() + unComerciante.impuestoSobre(unArtefactoNuevo))
+			unArtefactoNuevo.vendeteA(self)
 		} else {
 			throw new ExcepcionPorFaltaDeFondos("No tenes suficientes monedas de oro para comprar esto")
 		}

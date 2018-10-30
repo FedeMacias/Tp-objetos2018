@@ -15,7 +15,7 @@ class Armadura inherits Artefacto {
 
 	override method peso() = self.pesoInicial() - self.factorDeReduccion() + self.refuerzoArmadura().peso()
 
-	method precio() = self.precio() + self.refuerzoArmadura().precio()
+	override method precio() = self.precio() + self.refuerzoArmadura().precio()
 
 // Consultar para conseguir el peso del hechizo de forma correcta
 // Consultar para conseguir el precio de la armadura de la forma correcta
