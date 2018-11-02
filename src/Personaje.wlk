@@ -82,29 +82,10 @@ class Personaje {
 		}
 	}
 
-	method canjearHechizo(unHechizoNuevo, unComerciante) {
-		if (self.monedasOro() > unHechizoNuevo.precio()) {
-			self.transaccion(unHechizoNuevo, unComerciante)
-			unHechizoNuevo.vendeteA(self, unComerciante)
-		} else {
-			throw new ExcepcionPorFaltaDeFondos("No tenes suficientes monedas de oro para comprar esto")
-		}
-	}
-
-	method transaccion(unHechizoNuevo, unComerciante) {
-		if (self.hechizoFavorito().precio().div(2) > unHechizoNuevo.precio()) {
-			unHechizoNuevo.vendeteA(self, unComerciante)
-		} else {
-			self.quitarMonedas(unHechizoNuevo.precio())
-			self.ganarMonedas(self.hechizoFavorito().precio().div(2))
-			unHechizoNuevo.vendeteA(self, unComerciante)
-		}
-	}
-
-	method comprarArtefacto(unArtefactoNuevo, unComerciante) {
-		if (self.monedasOro() > unArtefactoNuevo.precio() + unComerciante.impuestoSobre(unArtefactoNuevo)) {
-			self.quitarMonedas(unArtefactoNuevo.precio() + unComerciante.impuestoSobre(unArtefactoNuevo))
-			unArtefactoNuevo.vendeteA(self)
+	method comprarA(unItem, unComerciante) {
+		if (self.monedasOro() > unItem.precio() + unComerciante.impuestoSobre(unItem)) {
+			self.quitarMonedas(unItem.precio() + unComerciante.impuestoSobre(unItem))
+			unItem.vendeteA(self)
 		} else {
 			throw new ExcepcionPorFaltaDeFondos("No tenes suficientes monedas de oro para comprar esto")
 		}

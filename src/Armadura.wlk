@@ -17,8 +17,6 @@ class Armadura inherits Artefacto {
 
 	override method precio() = self.precio() + self.refuerzoArmadura().precio()
 
-// Consultar para conseguir el peso del hechizo de forma correcta
-// Consultar para conseguir el precio de la armadura de la forma correcta
 }
 
 class CotaDeMalla {
@@ -41,14 +39,12 @@ object refuerzoNulo {
 
 }
 
-class Bendicion {
-
-	var property duenio = new Personaje()
+class Bendicion inherits Armadura{
 
 	method valorDeRefuerzo() = duenio.nivelHechiceria()
 
-	method peso() = 0
+	override method peso() = 0
 
-	method precio() = self.duenio()
+	override method precio() = self.valorBase()
 
 }

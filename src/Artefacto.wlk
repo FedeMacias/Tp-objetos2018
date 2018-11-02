@@ -16,6 +16,8 @@ class Artefacto {
 
 	method precio()
 
+	method descuentoPara(unPersonaje) = 0
+
 	method vendeteA(unPersonaje) = unPersonaje.agregarArtefacto(self)
 
 }
@@ -24,7 +26,7 @@ class ArmaAfilada inherits Artefacto {
 
 	method unidadesLucha() = 3
 
-	override method precio() = 5 * self.peso()
+	override method precio() = 5 * self.peso() - self.descuentoPara(unPersonaje)
 
 	override method peso() = self.pesoInicial() - self.factorDeReduccion()
 
@@ -36,7 +38,7 @@ class CollarDivino inherits Artefacto {
 
 	method unidadesLucha() = self.cantidadDePerlas()
 
-	override method precio() = 2 * self.cantidadDePerlas()
+	override method precio() = 2 * self.cantidadDePerlas() - self.descuentoPara(unPersonaje)
 
 	override method peso() = self.pesoInicial() - self.factorDeReduccion() + (self.cantidadDePerlas() * 0.5)
 
@@ -55,7 +57,7 @@ class MascaraOscura inherits Artefacto {
 
 	method bonusMascara() = (self.poderMascara() - 3).max(0)
 
-	override method precio() = self.indiceDeOscuridad() * 10
+	override method precio() = self.indiceDeOscuridad() * 10 - self.descuentoPara(unPersonaje)
 
 }
 
@@ -73,7 +75,7 @@ object espejoFantastico inherits Artefacto {
 		duenio.mejorArtefacto()
 	}
 
-	override method precio() = 90
+	override method precio() = 90 - self.descuentoPara(unPersonaje)
 
 }
 
@@ -97,7 +99,7 @@ object libroDeHechizos inherits Artefacto {
 
 	method poderDeHechizosPoderosos() = self.hechizosPoderososSinLibro().sum({ hechizosPoderososSinLibro => hechizosPoderososSinLibro.poderHechiceria() })
 
-	override method precio() = (10 * self.hechizos().size()) + self.poderDeHechizosPoderosos()
+	override method precio() = (10 * self.hechizos().size()) + self.poderDeHechizosPoderosos() - self.descuentoPara(unPersonaje)
 
 }
 

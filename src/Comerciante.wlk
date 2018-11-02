@@ -12,7 +12,6 @@ class Comerciante {
 
 }
 
-//Consultar el modelado de esto
 
 class ImpuestoPorComision {
 

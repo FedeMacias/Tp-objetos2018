@@ -14,7 +14,15 @@ class Logo {
 
 	method valorDeRefuerzo() = self.poderHechiceria()
 
-	method precio() = self.poderHechiceria()
+	method descuentoPara(unPersonaje) {
+		if (unPersonaje.hechizoFavorito().precio().div(2) > self.precio()) {
+			return self.poderHechiceria()
+		} else {
+			return unPersonaje.hechizoFavorito().precio().div(2)
+		}
+	}
+
+	method precio() = self.poderHechiceria() - self.descuentoPara(unPersonaje)
 
 	method peso() {
 		if (self.poderHechiceria().even()) {
