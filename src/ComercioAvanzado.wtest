@@ -44,14 +44,14 @@ describe "Tests de comercio avanzado" {
 		pastoriza.recategorizate()	
 		ursula.comprarA(mascaraOscura,pastoriza)
 
-		assert.equals(ursula.monedasOro(),87.9) //este deberia dar 86.4 (10*(0.36) = 3.6, 100- 10 - 3.6 = 86.4)
+		assert.equals(ursula.monedasOro(),87.9)
 
 	}
 	test "6)Ursula compra mascara oscura a prieto(recategorizado), queda con 88.25 monedas" {
 		prieto.recategorizate()
 		ursula.comprarA(mascaraOscura,prieto)
 
-		assert.equals(ursula.monedasOro(),89.1)
+		assert.equals(ursula.monedasOro(),88.25)
 
 	}
 	test "7)Ursula compra mascara oscura a fermepin, queda con 88.25 monedas" {

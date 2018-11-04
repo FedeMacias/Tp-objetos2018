@@ -20,7 +20,7 @@ describe "Tests sobre peso" {
 	const armaduraHechizoPar = new Armadura(refuerzoArmadura = hechizoComercial, pesoInicial = 12)
 	const armaduraHechizoImpar = new Armadura(refuerzoArmadura = espectroMalefico, pesoInicial = 12)
 	const armaduraSola = new Armadura(pesoInicial = 12)
-	const mockHnos = new Comerciante(tipoComerciante= new ImpuestoPorComision(comision = 0.0))
+	const mockHnos = new Comerciante(tipoComerciante= new Independiente(comision = 0.0))
 	const merlin = new Personaje(maximoEquipaje = 10)
 	const ursula = new Personaje(artefactos = [ mascaraOscura, armaduraConCota ])
 

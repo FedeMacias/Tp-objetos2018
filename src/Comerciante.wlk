@@ -5,7 +5,7 @@ import Comerciante.*
 class Comerciante {
 
 	var property tipoComerciante = 0
-	var property minimoNoImponible = 1
+	var property minimoNoImponible = 5
 
 	method impuestoSobre(unArtefacto) = self.tipoComerciante().impuesto(unArtefacto)
 
@@ -17,12 +17,20 @@ class Comerciante {
 
 class Independiente inherits Comerciante {
 
-	var property comision = 0.21
+	var property comision = 0
 
 	method impuesto(unArtefacto) = unArtefacto.precio() * self.comision()
 
-	method siguiente() = self.comision(self.comision()*2)
-	
+	method duplicarComision() = self.comision(self.comision() * 2)
+
+	method siguiente() {
+		if (self.comision() * 2 > 0.21) {
+			self.comision(self.iva())
+		} else {
+			self.duplicarComision()
+		}
+		
+	}
 }
 
 object registrado inherits Comerciante {
@@ -43,7 +51,7 @@ object conGanancias inherits Comerciante {
 		}
 	}
 
-	method siguiente() {}
+	method siguiente() = self.tipoComerciante(self)
 
 }
 
