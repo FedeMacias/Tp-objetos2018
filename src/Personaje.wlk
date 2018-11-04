@@ -9,7 +9,7 @@ class Personaje {
 	var property hechizoFavorito = new HechizoBasico()
 	var property monedasOro = 100
 	const property maximoEquipaje = 200
-	var property equipaje = 1
+	var property equipaje = 0
 	const property artefactos = []
 
 	method valorBase() = 3
@@ -37,7 +37,6 @@ class Personaje {
 		return self.reducirEquipaje(unArtefacto.peso())
 	}
 
-	// ese return self.reducirEquipaje no me cierra
 	method quitarTodoArtefacto() {
 		self.artefactos().clear()
 		self.equipaje(0)
@@ -51,9 +50,9 @@ class Personaje {
 
 	method nivelHechiceria() = ( self.valorBase() * self.hechizoFavorito().poderHechiceria() ) + fuerzaOscura.fuerzaOscura()
 
-	method habilidadDeLucha() = self.valorLucha() + self.poderArtefactos()
-
 	method poderArtefactos() = self.artefactos().sum({ artefacto => artefacto.unidadesLucha() })
+
+	method habilidadDeLucha() = self.valorLucha() + self.poderArtefactos()
 
 	method sosPoderoso() = self.hechizoFavorito().hechizoPoderoso()
 
@@ -76,16 +75,17 @@ class Personaje {
 	method mejorArtefacto() {
 		const artefactosSinEspejo = self.artefactos().filter({ artefacto => artefacto != espejoFantastico })
 		if (artefactosSinEspejo.isEmpty()) {
-			return 0
+			return 1
 		} else {
-			return artefactosSinEspejo.max({ artefacto => artefacto.unidadesLucha() })
+			return (artefactosSinEspejo.max({ artefacto => artefacto.unidadesLucha() })).unidadesLucha()
 		}
 	}
-
+	method precioFinal(unItem, unComerciante) = unItem.precio() - unItem.descuentoPara(self) + unComerciante.impuestoSobre(unItem)
+	
 	method comprarA(unItem, unComerciante) {
-		if (self.monedasOro() > unItem.precio() + unComerciante.impuestoSobre(unItem)) {
-			self.quitarMonedas(unItem.precio() + unComerciante.impuestoSobre(unItem))
-			unItem.vendeteA(self)
+		if (self.monedasOro() > self.precioFinal(unItem, unComerciante)) {
+			self.quitarMonedas(self.precioFinal(unItem, unComerciante))
+			unItem.vendeteA(self,unComerciante)
 		} else {
 			throw new ExcepcionPorFaltaDeFondos("No tenes suficientes monedas de oro para comprar esto")
 		}

@@ -16,13 +16,13 @@ class Logo {
 
 	method descuentoPara(unPersonaje) {
 		if (unPersonaje.hechizoFavorito().precio().div(2) > self.precio()) {
-			return self.poderHechiceria()
+			return self.precio()
 		} else {
 			return unPersonaje.hechizoFavorito().precio().div(2)
 		}
 	}
 
-	method precio() = self.poderHechiceria() - self.descuentoPara(unPersonaje)
+	method precio() = self.poderHechiceria()
 
 	method peso() {
 		if (self.poderHechiceria().even()) {
@@ -47,6 +47,30 @@ class HechizoComercial inherits Logo {
 class HechizoBasico inherits Logo {
 
 	override method poderHechiceria() = 10
+
+}
+
+object libroDeHechizos inherits Logo {
+
+	const property hechizos = []
+
+	override method peso() = 0
+
+	method hechizosPoderosos() = hechizos.filter({ hechizo => hechizo.hechizoPoderoso() })
+
+	method hechizosPoderososSinLibro() = self.hechizosPoderosos().filter({ hechizo => hechizo != self })
+
+	method agregarHechizo(unHechizo) = hechizos.add(unHechizo)
+
+	method agregarVariosHechizos(unosHechizos) = hechizos.addAll(unosHechizos)
+
+	method quitarHechizo(unHechizo) = hechizos.remove(unHechizo)
+
+	override method poderHechiceria() = self.poderDeHechizosPoderosos()
+
+	method poderDeHechizosPoderosos() = self.hechizosPoderososSinLibro().sum({ hechizosPoderososSinLibro => hechizosPoderososSinLibro.poderHechiceria() })
+
+	override method precio() = (10 * self.hechizos().size()) + self.poderDeHechizosPoderosos()
 
 }
 

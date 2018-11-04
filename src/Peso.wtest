@@ -9,10 +9,10 @@ import Logo.*
 describe "Tests sobre peso" {
 
 	const hechizoComercial = new HechizoComercial(nombre = "el hechizo comercial", multiplicador = 2)
-	const espectroMalefico = new Logo(nombre = "espectro maléfico")
+	const espectroMalefico = new Logo(nombre = "espectro malefico")
 	const espadaVieja = new ArmaAfilada(pesoInicial = 7, fechaDeCompra = new Date(7, 5, 2006))
 	const espadaNueva = new ArmaAfilada(pesoInicial = 4, fechaDeCompra = new Date())
-	const espadaComun = new ArmaAfilada(pesoInicial = 5, diasDeUso = 50)
+	const espadaComun = new ArmaAfilada(pesoInicial = 5)
 	const collarDivino = new CollarDivino()
 	const mascaraOscura = new MascaraOscura(unidadesLucha = 1, pesoInicial = 3)
 	const mascaraClara = new MascaraOscura(unidadesLucha = 0, indiceDeOscuridad = 0, pesoInicial = 2)
@@ -20,7 +20,7 @@ describe "Tests sobre peso" {
 	const armaduraHechizoPar = new Armadura(refuerzoArmadura = hechizoComercial, pesoInicial = 12)
 	const armaduraHechizoImpar = new Armadura(refuerzoArmadura = espectroMalefico, pesoInicial = 12)
 	const armaduraSola = new Armadura(pesoInicial = 12)
-	const mockHnos // si no trabaja con comision entonces que es?
+	const mockHnos = new Comerciante(tipoComerciante= new ImpuestoPorComision(comision = 0.0))
 	const merlin = new Personaje(maximoEquipaje = 10)
 	const ursula = new Personaje(artefactos = [ mascaraOscura, armaduraConCota ])
 
@@ -33,6 +33,7 @@ describe "Tests sobre peso" {
 	}
 
 	test "3)El peso de la espada comun es de 4.95" {
+		espadaComun.diasDeUso(50)
 		assert.equals(espadaComun.peso(), 4.95)
 	}
 
@@ -62,19 +63,20 @@ describe "Tests sobre peso" {
 	}
 
 	test "10)El peso de la armadura con el hechizo impar es de 13" {
-		assert.equals(armaduraHechizoImpar.peso(), 14)
+		assert.equals(armaduraHechizoImpar.peso(), 13)
 	}
 
 	test "11)El peso de la armadura sin refuerzo es de 12" {
 		assert.equals(armaduraSola.peso(), 12)
 	}
 	test "12)El peso de merlin despues de comprarle a mock la mascara clara es de 5"{
-		merlin.comprarArtefacto(merlin,mascaraClara,mockHnos)
+		merlin.comprarA(mascaraClara,mockHnos)
+		merlin.comprarA(mascaraOscura,mockHnos)
 		assert.equals(merlin.equipaje(),5)
 	}
 	test "13)Merlin NO puede comprarle la armadura con hechizo par a Mock"{
 		const mensajeError = "Te pasaste de peso, no podes cargar tantas cosas"
-		const bloqueQueFalla = {merlin.comprarArtefacto(merlin,espejoFantastico,mockHnos)}
+		const bloqueQueFalla = {merlin.comprarA(armaduraHechizoPar,mockHnos)}
 		const excepcion = new ExcepcionPorSobrecarga(mensajeError) 
 		assert.throwsExceptionLike(excepcion,bloqueQueFalla)
 	}

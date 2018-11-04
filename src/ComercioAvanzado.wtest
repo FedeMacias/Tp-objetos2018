@@ -9,10 +9,56 @@ import Logo.*
 describe "Tests de comercio avanzado" {
 	
 	const ursula = new Personaje()
+	const pastoriza = new Comerciante(tipoComerciante = new Independiente(comision = 0.09))
+	const prieto = new Comerciante(tipoComerciante = registrado)
+	const fermepin = new Comerciante(tipoComerciante = conGanancias, minimoNoImponible = 5)
+	const mascaraOscura = new MascaraOscura()
 
-	test "testX" {
+	test "1)Ursula compra mascara oscura a pastoriza, queda con 89.1 monedas" {
+		ursula.comprarA(mascaraOscura,pastoriza)
 
-		assert.that(true)
+		assert.equals(ursula.monedasOro(),89.1)
 
 	}
+	test "2)Ursula compra mascara oscura a prieto, queda con 87.9 monedas" {
+		ursula.comprarA(mascaraOscura,prieto)
+
+		assert.equals(ursula.monedasOro(),87.9)
+
+	}
+	test "3)Ursula compra mascara oscura a fermepin, queda con 88.25 monedas" {
+		ursula.comprarA(mascaraOscura,fermepin)
+
+		assert.equals(ursula.monedasOro(),88.25)
+
+	}
+	test "4)Ursula compra mascara oscura a pastoriza(recategorizada), queda con 88.2 monedas" {
+		pastoriza.recategorizate()
+		ursula.comprarA(mascaraOscura,pastoriza)
+
+		assert.equals(ursula.monedasOro(),88.2)
+
+	}
+	test "5)Ursula compra mascara oscura a pastoriza(recategorizada 2 veces), queda con 87.9 monedas" {
+		pastoriza.recategorizate()
+		pastoriza.recategorizate()	
+		ursula.comprarA(mascaraOscura,pastoriza)
+
+		assert.equals(ursula.monedasOro(),87.9) //este deberia dar 86.4 (10*(0.36) = 3.6, 100- 10 - 3.6 = 86.4)
+
+	}
+	test "6)Ursula compra mascara oscura a prieto(recategorizado), queda con 88.25 monedas" {
+		prieto.recategorizate()
+		ursula.comprarA(mascaraOscura,prieto)
+
+		assert.equals(ursula.monedasOro(),89.1)
+
+	}
+	test "7)Ursula compra mascara oscura a fermepin, queda con 88.25 monedas" {
+		fermepin.recategorizate()
+		ursula.comprarA(mascaraOscura,fermepin)
+
+		assert.equals(ursula.monedasOro(),88.25)
+
+	}					
 }

@@ -6,10 +6,9 @@ import Armadura.*
 import Logo.*
 
 describe "Tests de hechiceria" {
-
+	const espectroMalefico = new Logo(nombre = "espectro maléfico")
 	const rolando = new Personaje(hechizoFavorito = espectroMalefico)
 	const hechizoComercial = new HechizoComercial(nombre="el hechizo comercial",multiplicador = 2)
-	const espectroMalefico = new Logo(nombre = "espectro maléfico")
 	const furibunda = new Personaje(hechizoFavorito = hechizoComercial)
 
 	test "1)El nivel de hechiceria de rolando es de 56 puntos" {

@@ -7,7 +7,7 @@ class Armadura inherits Artefacto {
 
 	var property refuerzoArmadura = refuerzoNulo
 	const property valorBase = 2
-	var property precio = 2
+	var property precioBase = 2
 
 	method unidadesLucha() = self.valorBase() + self.refuerzo()
 
@@ -15,17 +15,17 @@ class Armadura inherits Artefacto {
 
 	override method peso() = self.pesoInicial() - self.factorDeReduccion() + self.refuerzoArmadura().peso()
 
-	override method precio() = self.precio() + self.refuerzoArmadura().precio()
+	override method precio() = self.precioBase() + self.refuerzoArmadura().precio()
 
 }
 
-class CotaDeMalla {
+class CotaDeMalla inherits Armadura {
 
 	var property valorDeRefuerzo = 1
 
-	method peso() = 1
+	override method peso() = 1
 
-	method precio() = self.valorDeRefuerzo() / 2
+	override method precio() = self.valorDeRefuerzo() / 2 - self.precioBase()
 
 }
 
@@ -45,6 +45,6 @@ class Bendicion inherits Armadura{
 
 	override method peso() = 0
 
-	override method precio() = self.valorBase()
+	override method precio() = 0
 
 }

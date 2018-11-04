@@ -4,72 +4,46 @@ import Comerciante.*
 
 class Comerciante {
 
-	var property tipo = 0
+	var property tipoComerciante = 0
+	var property minimoNoImponible = 1
 
-	method impuestoSobre(unArtefacto) = self.tipo().impuesto(unArtefacto)
+	method impuestoSobre(unArtefacto) = self.tipoComerciante().impuesto(unArtefacto)
 
-	method recategorizarse() = self.tipo().recategorizarse()
-
-}
-
-
-class ImpuestoPorComision {
-
-	var property comision = 0.21
-
-	method aplicarImpuesto(unArtefacto, unaComision) = unArtefacto.precio() * self.comision()
-
-}
-
-class ImpuestoPorIVA {
+	method recategorizate() = self.tipoComerciante().siguiente()
 
 	method iva() = 0.21
 
-	method aplicarImpuesto(unArtefacto) = unArtefacto.precio() * self.iva()
+}
+
+class Independiente inherits Comerciante {
+
+	var property comision = 0.21
+
+	method impuesto(unArtefacto) = unArtefacto.precio() * self.comision()
+
+	method siguiente() = self.comision(self.comision()*2)
+	
+}
+
+object registrado inherits Comerciante {
+
+	method impuesto(unArtefacto) = unArtefacto.precio() * self.iva()
+
+	method siguiente() = self.tipoComerciante(conGanancias)
 
 }
 
-class ImpuestoALasGanancias {
+object conGanancias inherits Comerciante {
 
-	var property minimoNoImponible = 1
-
-	method aplicarImpuesto(unArtefacto) {
+	method impuesto(unArtefacto) {
 		if (unArtefacto.precio() > self.minimoNoImponible()) {
-			return (unArtefacto.precio() - self.minimoNoImponible()) * 0.35
+			return ((unArtefacto.precio() - self.minimoNoImponible()) * 0.35)
 		} else {
 			return 0
 		}
 	}
 
-}
-
-class ComercianteIndependiente {
-
-	var property tipoDeImpuesto = 0
-
-	method impuesto(unArtefacto) = self.tipoDeImpuesto().aplicarImpuesto(unArtefacto)
-
-	method recategorizarse()
-
-}
-
-class ComercianteRegistrado {
-
-	var property tipoDeImpuesto = 0
-
-	method impuesto(unArtefacto) = self.tipoDeImpuesto().aplicarImpuesto(unArtefacto)
-
-	method recategorizarse()
-
-}
-
-class ComercianteConGanancias {
-
-	var property tipoDeImpuesto = 0
-
-	method impuesto(unArtefacto) = self.tipoDeImpuesto().aplicarImpuesto(unArtefacto)
-
-	method recategorizarse()
+	method siguiente() {}
 
 }
 

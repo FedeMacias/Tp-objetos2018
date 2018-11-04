@@ -8,7 +8,13 @@ class Artefacto {
 	var property pesoInicial = 0
 	var property fechaDeCompra = new Date()
 	const property fechaDeHoy = new Date()
-	var property diasDeUso = self.fechaDeHoy() - self.fechaDeCompra()
+	var diasDeUso = 0
+
+	method diasDeUso() = self.fechaDeHoy() - self.fechaDeCompra()
+	
+	method diasDeUso(dias){
+		diasDeUso = dias
+	}
 
 	method factorDeReduccion() = ((self.diasDeUso()) / 1000).min(1)
 
@@ -18,7 +24,7 @@ class Artefacto {
 
 	method descuentoPara(unPersonaje) = 0
 
-	method vendeteA(unPersonaje) = unPersonaje.agregarArtefacto(self)
+	method vendeteA(unPersonaje,unComerciante) = unPersonaje.agregarArtefacto(self)
 
 }
 
@@ -26,9 +32,9 @@ class ArmaAfilada inherits Artefacto {
 
 	method unidadesLucha() = 3
 
-	override method precio() = 5 * self.peso() - self.descuentoPara(unPersonaje)
+	override method precio() = (5 * self.pesoInicial())
 
-	override method peso() = self.pesoInicial() - self.factorDeReduccion()
+
 
 }
 
@@ -38,7 +44,7 @@ class CollarDivino inherits Artefacto {
 
 	method unidadesLucha() = self.cantidadDePerlas()
 
-	override method precio() = 2 * self.cantidadDePerlas() - self.descuentoPara(unPersonaje)
+	override method precio() = 2 * self.cantidadDePerlas()
 
 	override method peso() = self.pesoInicial() - self.factorDeReduccion() + (self.cantidadDePerlas() * 0.5)
 
@@ -57,7 +63,7 @@ class MascaraOscura inherits Artefacto {
 
 	method bonusMascara() = (self.poderMascara() - 3).max(0)
 
-	override method precio() = self.indiceDeOscuridad() * 10 - self.descuentoPara(unPersonaje)
+	override method precio() = self.indiceDeOscuridad() * 10
 
 }
 
@@ -75,31 +81,7 @@ object espejoFantastico inherits Artefacto {
 		duenio.mejorArtefacto()
 	}
 
-	override method precio() = 90 - self.descuentoPara(unPersonaje)
-
-}
-
-object libroDeHechizos inherits Artefacto {
-
-	const property hechizos = []
-
-	override method peso() = 0
-
-	method hechizosPoderosos() = hechizos.filter({ hechizo => hechizo.hechizoPoderoso() })
-
-	method hechizosPoderososSinLibro() = self.hechizosPoderosos().filter({ hechizo => hechizo != self })
-
-	method agregarHechizo(unHechizo) = hechizos.add(unHechizo)
-
-	method agregarVariosHechizos(unosHechizos) = hechizos.addAll(unosHechizos)
-
-	method quitarHechizo(unHechizo) = hechizos.remove(unHechizo)
-
-	method poderHechiceria() = self.poderDeHechizosPoderosos()
-
-	method poderDeHechizosPoderosos() = self.hechizosPoderososSinLibro().sum({ hechizosPoderososSinLibro => hechizosPoderososSinLibro.poderHechiceria() })
-
-	override method precio() = (10 * self.hechizos().size()) + self.poderDeHechizosPoderosos() - self.descuentoPara(unPersonaje)
+	override method precio() = 90
 
 }
 

@@ -6,18 +6,18 @@ import Logo.*
 
 describe "Tests de lucha y hechiceria avanzada" {
 
-	const rolando = new Personaje()
-	const armadura = new Armadura(duenio = rolando)
-	const collarDivino = new CollarDivino(duenio = rolando, cantidadDePerlas = 5)
 	const hechizoBasico = new HechizoBasico()
 	const espectroMalefico = new Logo(nombre = "espectro malefico")
-	const armaduraExtra = new Armadura(valorBase = 5, refuerzoArmadura = new CotaDeMalla(valorDeRefuerzo = 6), duenio = rolando)
 	const espadaDelDestino = new ArmaAfilada()
 	const mascaraOscura = new MascaraOscura()
+	const rolando = new Personaje(artefactos = [ espadaDelDestino, mascaraOscura, espejoFantastico ], hechizoFavorito = new Logo(nombre = "espectro malefico"))
+	const armadura = new Armadura(duenio = rolando)
+	const collarDivino = new CollarDivino(duenio = rolando, cantidadDePerlas = 5)
+	const armaduraExtra = new Armadura(valorBase = 5, refuerzoArmadura = new CotaDeMalla(valorDeRefuerzo = 6), duenio = rolando)
 
 	fixture {
-		rolando.agregarVariosArtefactos([ espadaDelDestino, collarDivino, mascaraOscura, espejoFantastico, armadura ])
-		rolando.hechizoFavorito(new Logo(nombre = "espectro malefico"))
+		rolando.agregarArtefacto(armadura)
+		rolando.agregarArtefacto(collarDivino)
 	}
 
 	test "1)rolando esta cargado" {
