@@ -77,7 +77,7 @@ class Personaje {
 		if (artefactosSinEspejo.isEmpty()) {
 			return 1
 		} else {
-			return (artefactosSinEspejo.max({ artefacto => artefacto.unidadesLucha() })).unidadesLucha()
+			return (artefactosSinEspejo.max({ artefacto => artefacto.unidadesLucha() }))
 		}
 	}
 	method precioFinal(unItem, unComerciante) = unItem.precio() - unItem.descuentoPara(self) + unComerciante.impuestoSobre(unItem)

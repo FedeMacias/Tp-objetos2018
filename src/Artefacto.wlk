@@ -78,7 +78,7 @@ object fuerzaOscura {
 object espejoFantastico inherits Artefacto {
 
 	method unidadesLucha() {
-		duenio.mejorArtefacto()
+		duenio.mejorArtefacto().unidadesLucha()
 	}
 
 	override method precio() = 90
